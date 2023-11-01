@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString, MaxLength, IsBoolean } from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { TodoStatus } from '../todo.enum';
 
 export class CreateTodoDto {
   @IsString()
@@ -11,6 +12,5 @@ export class CreateTodoDto {
   @MaxLength(150)
   readonly description: string;
 
-  @IsBoolean()
-  readonly completed: boolean;
+  readonly status: TodoStatus;
 }

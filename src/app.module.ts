@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TodoModule } from './todo/todo.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ActivityModule } from './activity/activity.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       { dbName: 'todos' },
     ),
     TodoModule,
+    ActivityModule,
   ],
   controllers: [AppController],
   providers: [AppService],

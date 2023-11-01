@@ -3,9 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { Model, Types } from 'mongoose';
-import { ITodo } from 'src/interfaces/todo.interface';
-import { Todo, TodoDocument } from 'src/schemas/todo.schema';
-import { Activity } from 'src/schemas/activity.schema';
+import { Todo, TodoDocument } from 'src/todo/todo.schema';
+import { Activity } from 'src/activity/activity.schema';
 
 @Injectable()
 export class TodoService {
@@ -46,25 +45,7 @@ export class TodoService {
       throw new NotFoundException(`Todo ${todoId} Not Found!`);
     }
 
-    // existingTodo.title = updateTodoDto.title || existingTodo.title;
-    // existingTodo.description =
-    //   updateTodoDto.description || existingTodo.description;
-    // existingTodo.completed = updateTodoDto.completed || existingTodo.completed;
-
-    if (
-      updateTodoDto.title ||
-      updateTodoDto.description ||
-      updateTodoDto.completed
-    ) {
-      const activity = new Activity({
-        description: `Todo updated: ${existingTodo.title} - ${
-          existingTodo.description
-        } - ${existingTodo.completed ? 'completed' : 'incomplete'}`,
-      });
-      existingTodo.activities.push(activity);
-    }
-
-    return existingTodo.save();
+    return existingTodo;
   }
 
   async deleteTodo(todoId: Types.ObjectId): Promise<Todo> {
@@ -73,13 +54,5 @@ export class TodoService {
       throw new NotFoundException(`Todo ${todoId} Not Found!`);
     }
     return deletedTodo;
-  }
-
-  async getTodoActivity(todoId: Types.ObjectId): Promise<Activity[]> {
-    const todo = await this.todoModel.findById(todoId).exec();
-    if (!todo) {
-      throw new NotFoundException(`Todo ${todoId} Not Found!`);
-    }
-    return todo.activities;
   }
 }
