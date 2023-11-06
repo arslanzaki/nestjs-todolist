@@ -16,18 +16,14 @@ export class ActivityService {
     if (!todo) {
       return null;
     }
-    //console.log('test', todo);
     const { title, description, status } = todo;
     const activity = new this.activityModel({ title, description, status });
-    // console.log('todoid', todoId);
     activity.todoId = todoId;
-    // console.log(activity);
     await activity.save();
   }
 
   async getTodoActivities(todoId: Types.ObjectId) {
     const activities = await this.activityModel.find({ todoId }).exec();
-    // console.log(activities);
     if (!activities) {
       return [];
     }

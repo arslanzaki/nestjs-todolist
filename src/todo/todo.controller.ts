@@ -42,7 +42,6 @@ export class TodoController {
     @Body() updateTodoDto: UpdateTodoDto,
   ) {
     const _id = new Types.ObjectId(todoId);
-    //console.log(_id, todoId);
     const updatedTodo = await this.todoService.updateTodo(_id, updateTodoDto);
     console.log(updatedTodo,'up')
     await this.activityService.createActivity(_id);
@@ -53,5 +52,11 @@ export class TodoController {
   deleteTodo(@Param('id') todoId: string) {
     const _id = new Types.ObjectId(todoId);
     return this.todoService.deleteTodo(_id);
+  }
+
+  @Get(':id/activities')
+  getTodoActivities(@Param('id') todoId: string) {
+    const _id = new Types.ObjectId(todoId);
+    return this.activityService.getTodoActivities(_id);
   }
 }
